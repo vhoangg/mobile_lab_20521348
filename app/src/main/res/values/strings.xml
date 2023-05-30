@@ -2,6 +2,6 @@
     <string name="app_name">mobile_labs_20521348</string>
     <string name="mobile"><font color='#2196F3'>Mobile </font><font>Labs</font></string>
     <string name="backtologin"><font color='#9D9E9F'>Back to </font><font>Login</font></string>
-    <string name="donthaveaccount"><font color='#9D9E9F'>Don't have an account? </font><font>Sign Up</font></string>
+    <string name="donthaveaccount"><font color='#9D9E9F'>Dont have an account? </font><font>Sign Up</font></string>
     <string name="labs">Labs</string>
 </resources>
