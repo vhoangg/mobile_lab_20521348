@@ -13,17 +13,22 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import org.w3c.dom.Text;
-
 import java.math.BigInteger;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.List;
 
 public class login extends AppCompatActivity {
 
@@ -58,7 +63,7 @@ public class login extends AppCompatActivity {
         edtUsername = findViewById(R.id.edtUsername);
         edtPassword = findViewById(R.id.edtPassword);
         btnLogin = findViewById(R.id.btnLogin);
-        txtSignup = findViewById(R.id.textSignup);
+        txtSignup = findViewById(R.id.txtSignup);
 
         txtSignup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,28 +76,28 @@ public class login extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(login.this, homepage.class);
+                String username = edtUsername.getText().toString();
+                String password = edtPassword.getText().toString();
+
                 db.collection("accounts")
-                        .whereEqualTo("Password", encryptPassword(edtPassword.getText().toString()))
-                        .whereEqualTo("Username", edtUsername.getText().toString())
+                        .whereEqualTo("Username", username)
+                        .whereEqualTo("Password", password)
                         .get()
                         .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                 if (task.isSuccessful()) {
-                                    Toast.makeText(getApplicationContext(), "Đăng nhập thành công", Toast.LENGTH_LONG).show();
-                                    QuerySnapshot querySnapshot = task.getResult();
-                                    if (querySnapshot != null && !querySnapshot.isEmpty()) {
-                                        List<DocumentSnapshot> documents = querySnapshot.getDocuments();
-                                        String fullname = documents.get(0).getString("FullName");
-                                        intent.putExtra("full name", fullname);
-                                        startActivity(intent);
-                                        finish();
+                                    QuerySnapshot snapshot = task.getResult();
+                                    if (snapshot.isEmpty()) {
+                                        Toast.makeText(login.this, "Username or Password is incorrect", Toast.LENGTH_SHORT).show();
+
                                     } else {
-                                        Toast.makeText(getApplicationContext(), "Sai tài khoản hoặc mật khẩu", Toast.LENGTH_LONG).show();
-                                        Log.d("tag", "Không tìm thấy dữ liệu.");
+                                        Toast.makeText(login.this, "Register successfully", Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(login.this, homepage.class);
+                                        startActivity(intent);
                                     }
                                 } else {
-                                    Log.d("tag", "Lỗi khi truy vấn dữ liệu: ", task.getException());
+                                    Toast.makeText(login.this, "Error querying database.", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
