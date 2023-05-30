@@ -17,9 +17,7 @@ public class homepage extends AppCompatActivity {
         setContentView(R.layout.activity_homepage);
 
         Intent intent = getIntent();
-        String fullname = intent.getStringExtra("full name");
         TextView txtName = findViewById(R.id.txtName);
-        txtName.setText(fullname);
         Button btnLogout = findViewById(R.id.btnLogout);
 
         btnLogout.setOnClickListener(new View.OnClickListener(){

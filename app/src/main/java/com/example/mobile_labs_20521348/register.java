@@ -95,7 +95,6 @@ public class register extends AppCompatActivity {
                                     Intent intent = new Intent(register.this, login.class);
                                     startActivity(intent);
                                 }
-
                             })
                             .addOnFailureListener(new OnFailureListener() {
                                 @Override
