@@ -81,7 +81,7 @@ public class login extends AppCompatActivity {
 
                 db.collection("accounts")
                         .whereEqualTo("Username", username)
-                        .whereEqualTo("Password", password)
+                        .whereEqualTo("Password", encryptPassword(password))
                         .get()
                         .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override
@@ -94,6 +94,9 @@ public class login extends AppCompatActivity {
                                     } else {
                                         Toast.makeText(login.this, "Register successfully", Toast.LENGTH_SHORT).show();
                                         Intent intent = new Intent(login.this, homepage.class);
+                                        List<DocumentSnapshot> list  = snapshot.getDocuments();
+                                        String fullname = list.get(0).getString("Full name");
+                                        intent.putExtra("Fullname", fullname);
                                         startActivity(intent);
                                     }
                                 } else {

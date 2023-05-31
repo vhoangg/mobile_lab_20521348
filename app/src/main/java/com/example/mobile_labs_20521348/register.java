@@ -80,10 +80,10 @@ public class register extends AppCompatActivity {
             public void onClick(View v) {
                 if (edtUsername.getText().toString().length() >= 6 && edtPassword.getText().toString().length() >= 6) {
                     Map<String, Object> account = new HashMap<>();
-                    account.put("Full name: ", edtFullname.getText().toString());
-                    account.put("Phone: ", edtPhone.getText().toString());
-                    account.put("Username: ", edtUsername.getText().toString());
-                    account.put("Password: ", encryptPassword(edtPassword.getText().toString()));
+                    account.put("Full name", edtFullname.getText().toString());
+                    account.put("Phone", edtPhone.getText().toString());
+                    account.put("Username", edtUsername.getText().toString());
+                    account.put("Password", encryptPassword(edtPassword.getText().toString()));
 
                     db.collection("accounts")
                             .add(account)

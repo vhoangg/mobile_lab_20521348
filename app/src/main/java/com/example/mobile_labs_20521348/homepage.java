@@ -17,11 +17,12 @@ public class homepage extends AppCompatActivity {
         setContentView(R.layout.activity_homepage);
 
         Intent intent = getIntent();
+        String fullname = intent.getStringExtra("Fullname");
         TextView txtName = findViewById(R.id.txtName);
+        txtName.setText(fullname);
         Button btnLogout = findViewById(R.id.btnLogout);
 
         btnLogout.setOnClickListener(new View.OnClickListener(){
-
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(homepage.this, login.class);
